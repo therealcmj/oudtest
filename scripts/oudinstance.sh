@@ -1,10 +1,5 @@
 #!/bin/bash
 
-if [ -e ~/Oracle/Middleware/asinst_1 ]; then
-	echo "OUD instance already created"
-	exit
-fi
-
 #PASSWORDFILE=/tmp/$$.password
 PASSWORDFILE=~/oudpassword.txt
 
@@ -12,6 +7,18 @@ cd ~/Oracle/Middleware/Oracle_OUD1
 
 echo "ABcd1234" > $PASSWORDFILE
 #cat $PASSWORDFILE
+
+
+
+
+
+if [ -e ~/Oracle/Middleware/asinst_1 ]; then
+	echo "OUD instance already created"
+	exit
+fi
+
+
+
 
 # either -a (for the base)
 # or     -d 10000 (for the sample data)
