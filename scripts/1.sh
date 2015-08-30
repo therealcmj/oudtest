@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# This script does its work pretty blindly
+cp /vagrant/.bash_profile ~
+
+. .bash_profile
+
+if [ -e ~/jdk1.7.0_80 ]; then
+	echo "JDK directory already exists"
+else
+	tar xvzf /media/software/jdk-7u80-linux-x64.tar.gz
+fi
+
+if [ -e ~/jdk ]; then
+	echo "JDK symlink already exists"
+else
+	ln -s ~/jdk1.7.0_80 jdk
+fi
+
+# should install WLS
+if [ -e ~/Oracle/Middleware/wlserver_10.3 ]; then
+	echo "WLS already installed"
+else
+	java -jar /media/software/wls1036_generic.jar -mode=silent -silent_xml=/vagrant/rsp/wls1036.xml
+fi
+
+if [ -e ~/Oracle/Middleware/Oracle_OUD1 ]; then
+	echo "OUD appears to already be installed"
+else
+	cd /media/software/ofm_oud_generic_11.1.2.2/Disk1
+	./runInstaller -jreLoc ~/jdk -silent -invPtrLoc /vagrant/rsp/oraInst.loc -responseFile /vagrant/rsp/oud.rsp -waitforcompletion -ignoreSysPrereqs
+fi
+
